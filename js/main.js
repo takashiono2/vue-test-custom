@@ -21,7 +21,7 @@
       }
     },
     mounted: function(){
-      this.todos = JSON.parse(localStorage.getItem('todos'))
+      this.todos = JSON.parse(localStorage.getItem('todos'))||[]
     },
     methods: {
       addItem: function(){
