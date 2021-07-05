@@ -21,6 +21,7 @@
           {{ todo.title }}
         </span>
         <span @click="deleteItem(index)" class="command">[x]</span>
+        <span class="time">{{ todo.time }}</span>
       </li>
     </ul>
     <ul v-else>

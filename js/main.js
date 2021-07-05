@@ -9,7 +9,8 @@
         // {title: 'task1',isDone: false},
         // {title: 'task2',isDone: false},
         // {title: 'task3',isDone: true}
-      ]
+      ],
+      nowTime: '00:00'
     },
     watch: {
       todos: {
@@ -25,8 +26,13 @@
     },
     methods: {
       addItem: function(){
+        var date = new Date();
+        let month = date.getMonth() + 1;
+        this.nowTime = date.getFullYear()+ '年'+ month + '月' +　date.getDate()+ '日'                         
+                        + date.getHours() + ':'+ date.getMinutes();
         var item = {
           title: this.newItem,
+          time: this.nowTime,
           isDone: false
         }
         this.todos.push(item);
