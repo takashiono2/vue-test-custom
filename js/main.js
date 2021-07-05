@@ -27,9 +27,9 @@
     methods: {
       addItem: function(){
         var date = new Date();
-        let month = date.getMonth() + 1;
-        this.nowTime = date.getFullYear()+ '年'+ month + '月' +　date.getDate()+ '日'                         
-                        + date.getHours() + ':'+ date.getMinutes();
+        let month = (date.getMonth() + 1).toString().padStart(2, 0);
+        this.nowTime = date.getFullYear()+ '年'+ month + '月' +　date.getDate().toString().padStart(2, 0)+ '日'                         
+                        + date.getHours().toString().padStart(2, 0) + ':'+ date.getMinutes().toString().padStart(2, 0);
         var item = {
           title: this.newItem,
           time: this.nowTime,
