@@ -12,7 +12,10 @@
     <h1>
       ToDoリスト
       <span class="info">{{ remaining }}/{{ todos.length }}</span>
-      <button v-on:click="purge">purge</button>
+      <button v-on:click="purge">選択のみ削除</button>
+      <button v-on:click="clear">全削除</button>
+      <button v-on:click="sorts">並び替え</button>
+      <!-- <button v-on:click="clear">clear</button> -->
     </h1>
     <ul v-if="todos.length">
       <li v-for="(todo,index) in todos">

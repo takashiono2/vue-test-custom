@@ -6,11 +6,12 @@
     data: {
       newItem: '', 
       todos: [
-        // {title: 'task1',isDone: false},
-        // {title: 'task2',isDone: false},
-        // {title: 'task3',isDone: true}
+        // {title: 'task1',time: nowTime,isDone: false},
+        // {title: 'task2',time: nowTime,isDone: false},
+        // {title: 'task3',time: nowTime,isDone: true}
       ],
-      nowTime: '00:00'
+      nowTime: '00:00',
+      count: 0
     },
     watch: {
       todos: {
@@ -42,14 +43,25 @@
         if (confirm('are you sure?')) {
           this.todos.splice(index, 1);
         }
-      },    
+      },
       purge: function(){//チェックがついているものを削除したい
-        if (!confirm('delete finished?')) {
+        if (!confirm('選択されているタスクを削除でしてもいいですか？')) {
           return;
-        }  
+        } 
         this.todos = this.todos.filter(function(todo){
           return !todo.isDone;//終わってないものだけ残す            
         });
+      },
+      clear: function(){//全部削除の場合
+        if (!confirm('全タスクを削除でしてもいいですか？')) {
+          return;
+        } 
+        this.todos.splice(0);
+      },
+      sorts: function(){
+          this.todos.reverse();
+          // this.todos.sort(function(first, second){
+          //   return first - second;
       }
     },
     computed: {
