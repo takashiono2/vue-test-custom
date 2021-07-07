@@ -1,6 +1,27 @@
 (function(){
   'use strict';
 
+  Vue.component('component', {
+    data: function() {
+        return {
+          status:'未着手'
+        }
+     },
+    // template: '<p>{{ status }}<button @click="statusClick">ステータス変更</button></p>',
+    template: '<div><p>ステータス：<button @click="statusClick">{{ status }}</button></p></div>',
+    methods: {
+      statusClick: function() {
+            if(this.status === '未着手' && this.status !== '完了'){
+              return this.status = '進行中';
+            }else if(this.status ==='進行中'){
+              return this.status = '完了';
+            }else if((this.status !== '進行中')||(this.status == '完了')){
+              return this.status = '未着手' ;
+            }
+          }
+        }
+  });
+
   var app = new Vue({
     el: "#app",
     data: {
@@ -11,7 +32,7 @@
         // {title: 'task3',time: nowTime,isDone: true}
       ],
       nowTime: '00:00',
-      count: 0
+      status: '未着手'
     },
     watch: {
       todos: {
@@ -31,10 +52,12 @@
         let month = (date.getMonth() + 1).toString().padStart(2, 0);
         this.nowTime = date.getFullYear()+ '年'+ month + '月' +　date.getDate().toString().padStart(2, 0)+ '日'                         
                         + date.getHours().toString().padStart(2, 0) + ':'+ date.getMinutes().toString().padStart(2, 0);
+        var newStatus = this.status                
         var item = {
           title: this.newItem,
           time: this.nowTime,
-          isDone: false
+          isDone: false,
+          status: newStatus
         }
         this.todos.push(item);
         this.newItem = '';
