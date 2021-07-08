@@ -15,17 +15,19 @@
       <button v-on:click="purge">選択のみ削除</button>
       <button v-on:click="clear">全削除</button>
       <button v-on:click="sorts">並び替え</button>
+      <button v-on:click="go">進行中</button>
+      <!-- <button v-on:click="fin">並び替え</button> -->
       <!-- <button v-on:click="clear">clear</button> -->
     </h1>
     <ul v-if="todos.length">
-      <li v-for="(todo,index) in todos" :key="todo.id">
-        <input type="checkbox" v-model="todo.isDone">
-        <span v-bind:class="{done: todo.isDone}">
+      <li v-for="(todo,index) in todos" :key="todo.id" v-show="todo.isShow">
+        <input type="checkbox" v-model="todo.isDone1">
+        <input type="checkbox" v-model="todo.isDone2">
+        <span v-bind:class="{done: todo.isDone2}">
           {{index}}{{ todo.title }}
         </span>
         <span @click="deleteItem(index)" class="command">[x]</span>
         <span class="info">{{ todo.time }}</span>
-        <component :key="todo.id"></component>
       </li>
     </ul>
     <ul v-else>

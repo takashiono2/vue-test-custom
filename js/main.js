@@ -1,27 +1,6 @@
 (function(){
   'use strict';
 
-  Vue.component('component', {
-    data: function() {
-        return {
-          status:'未着手'
-        }
-     },
-    // template: '<p>{{ status }}<button @click="statusClick">ステータス変更</button></p>',
-    template: '<div><p>ステータス：<button @click="statusClick">{{ status }}</button></p></div>',
-    methods: {
-      statusClick: function() {
-            if(this.status === '未着手' && this.status !== '完了'){
-              return this.status = '進行中';
-            }else if(this.status ==='進行中'){
-              return this.status = '完了';
-            }else if((this.status !== '進行中')||(this.status == '完了')){
-              return this.status = '未着手' ;
-            }
-          }
-        }
-  });
-
   var app = new Vue({
     el: "#app",
     data: {
@@ -31,8 +10,7 @@
         // {title: 'task2',time: nowTime,isDone: false},
         // {title: 'task3',time: nowTime,isDone: true}
       ],
-      nowTime: '00:00',
-      status: '未着手'
+      nowTime: '00:00'
     },
     watch: {
       todos: {
@@ -56,8 +34,9 @@
         var item = {
           title: this.newItem,
           time: this.nowTime,
-          isDone: false,
-          status: newStatus
+          isDone1: false,
+          isDone2: false,
+          isShow: true
         }
         this.todos.push(item);
         this.newItem = '';
@@ -72,7 +51,7 @@
           return;
         } 
         this.todos = this.todos.filter(function(todo){
-          return !todo.isDone;//終わってないものだけ残す            
+          return !todo.isDone2;//終わってないものだけ残す            
         });
       },
       clear: function(){//全部削除の場合
@@ -83,15 +62,27 @@
       },
       sorts: function(){
           this.todos.reverse();
-          // this.todos.sort(function(first, second){
-          //   return first - second;
+      },
+      go: function(){
+        var item = this.todos.filter(function(todo){
+          if(todo.isDone1 === false){//チェックがついていなければ
+            todo.isDone1 = !todo.isDone1;//falseを返す
+            todo.isShow = !todo.isShow;//
+        // const app = document.querySelector('#app');
+        // const ul = app.querySelectorAll('.ul');
+        // const li = ul.querySelectorAll('.li');
+        // li.forEach(function(e){
+        //   console.log(e);
+        // }
+          }
+      });
       }
     },
     computed: {
       remaining: function(){
         var items = this.todos.filter(function(todo){
-          if (todo.isDone === false){
-            return !todo.isDone;//falseを返す
+          if (todo.isDone2 === false){
+            return !todo.isDone2;//falseを返す
           }else{
             return null;
           }
