@@ -1,7 +1,7 @@
 (function(){
   'use strict';
   var app = new Vue({
-    el: "#app",
+    el: '#app',
     data: {
         defaultDate: '2021-07-08',
         DatePickerFormat: 'yyyy-MM-dd',
@@ -81,19 +81,20 @@
           this.todos.reverse();
       },
       go: function(){
-        var item = this.todos.filter(function(todo){
+          var item = this.todos.filter(function(todo){
           if(todo.isDone1 === false){//チェックがついていなければ
             todo.isDone1 = !todo.isDone1;//falseを返す
-            todo.isShow = !todo.isShow;//
-        // const app = document.querySelector('#app');
-        // const ul = app.querySelectorAll('.ul');
-        // const li = ul.querySelectorAll('.li');
-        // li.forEach(function(e){
-        //   console.log(e);
-        // }
+            todo.isShow = !todo.isShow;
           }
-        return todos.isShow = true;
-      });
+        });
+      },
+      fin: function(){
+        var item = this.todos.filter(function(todo){
+        if(todo.isDone2 === false){//チェックがついていなければ
+          todo.isDone2 = !todo.isDone2;//falseを返す
+          todo.isShow = !todo.isShow;//
+        }
+        });
       }
     },
     computed: {
