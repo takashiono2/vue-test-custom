@@ -1,9 +1,20 @@
 (function(){
   'use strict';
-
   var app = new Vue({
     el: "#app",
     data: {
+        defaultDate: '2021-07-08',
+        DatePickerFormat: 'yyyy-MM-dd',
+        language:{
+          language: 'Japanese', 
+          months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'], 
+          monthsAbbr: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'], 
+          days: ['日', '月', '火', '水', '木', '金', '土'], 
+          rtl: false, 
+          ymd: 'yyyy-MM-dd', 
+          yearSuffix: '年'
+        },
+      
       newItem: '', 
       todos: [
         // {title: 'task1',time: nowTime,isDone: false},
@@ -11,6 +22,9 @@
         // {title: 'task3',time: nowTime,isDone: true}
       ],
       nowTime: '00:00'
+    },
+    components: {
+      'vuejs-datepicker':vuejsDatepicker
     },
     watch: {
       todos: {
@@ -25,6 +39,9 @@
       this.todos = JSON.parse(localStorage.getItem('todos'))||[]
     },
     methods: {
+      customformat: function(value){
+        return moment(value).format('YYYY-MM-DD');
+      },
       addItem: function(){
         var date = new Date();
         let month = (date.getMonth() + 1).toString().padStart(2, 0);
@@ -42,12 +59,12 @@
         this.newItem = '';
       },
       deleteItem: function(index){
-        if (confirm('are you sure?')) {
+        if (confirm('このタスクを削除してもいいですか?')) {
           this.todos.splice(index, 1);
         }
       },
       purge: function(){//チェックがついているものを削除したい
-        if (!confirm('選択されているタスクを削除でしてもいいですか？')) {
+        if (!confirm('終了しているタスクを削除してもいいですか？')) {
           return;
         } 
         this.todos = this.todos.filter(function(todo){
@@ -55,7 +72,7 @@
         });
       },
       clear: function(){//全部削除の場合
-        if (!confirm('全タスクを削除でしてもいいですか？')) {
+        if (!confirm('全タスクを削除してもいいですか？')) {
           return;
         } 
         this.todos.splice(0);
@@ -75,6 +92,7 @@
         //   console.log(e);
         // }
           }
+        return todos.isShow = true;
       });
       }
     },

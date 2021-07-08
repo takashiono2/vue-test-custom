@@ -11,34 +11,51 @@
   <div id="app" class="container">
     <h1>
       ToDoリスト
-      <span class="info">{{ remaining }}/{{ todos.length }}</span>
-      <button v-on:click="purge">選択のみ削除</button>
+      <span class="info">残り{{ remaining }}件/全{{ todos.length }}件</span>
+      <button v-on:click="purge">終了のみ削除</button>
       <button v-on:click="clear">全削除</button>
       <button v-on:click="sorts">並び替え</button>
       <button v-on:click="go">進行中</button>
       <!-- <button v-on:click="fin">並び替え</button> -->
       <!-- <button v-on:click="clear">clear</button> -->
     </h1>
-    <ul v-if="todos.length">
-      <li v-for="(todo,index) in todos" :key="todo.id" v-show="todo.isShow">
-        <input type="checkbox" v-model="todo.isDone1">
-        <input type="checkbox" v-model="todo.isDone2">
-        <span v-bind:class="{done: todo.isDone2}">
-          {{index}}{{ todo.title }}
-        </span>
-        <span @click="deleteItem(index)" class="command">[x]</span>
-        <span class="info">{{ todo.time }}</span>
-      </li>
-    </ul>
-    <ul v-else>
-      <p>Nothing now</p>
-    </ul>
+    <span>
+      <vuejs-datepicker 
+      v-model="defaultDate"
+      :format="DatePickerFormat"
+      :language="language"
+      :inline="true" 
+      name="datepicker"
+      id="input-id"
+      input-class="input-class"           
+      ></vuejs-datepicker>
+      <p>期限：{{customformat(defaultDate)}}</p>
+    </span>
+    
+      <ul v-if="todos.length">
+        <li v-for="(todo,index) in todos" :key="todo.id" v-show="todo.isShow">            
+          <span class="num">NO.{{index + 1}}</span>
+          <span v-bind:class="{done: todo.isDone2}">
+          「{{ todo.title }}」
+          </span>
+          <input type="checkbox" v-model="todo.isDone1">進行中 /
+          <input type="checkbox" v-model="todo.isDone2">終了
+          <span class="info">{{ todo.time }}</span>
+          <span @click="deleteItem(index)" class="command">[x]</span>
+        </li>
+      </ul>
+      <ul v-else>
+        <p>Nothing now</p>
+      </ul>
+    
     <form @submit.prevent="addItem">
-      <input type="text" v-model="newItem">
-      <input type="submit" value="Add">
+      <input type="text" v-model="newItem" placeholder="タスクを入力">
+      <input type="submit" value="追加">
     </form>
   </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://unpkg.com/vuejs-datepicker"></script>
+<script src="https://momentjs.com/downloads/moment.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

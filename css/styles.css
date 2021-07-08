@@ -4,7 +4,7 @@ body {
 }
 
 .container {
-  width: 300px;
+  width: 800px;
   margin: auto;
 }
 
@@ -17,7 +17,7 @@ h1{
 }
 
 #app input[type="text"] {
-  padding: 2px;
+  padding: 4px;
 }
 
 .command{
@@ -32,11 +32,22 @@ h1{
 
 #app li>span.done{
   text-decoration: line-through;
-  color: #bbb;
+  color: pink;
+  margin-right: 6px;
 }
 
 .info {
   color: #bbb;
   font-size: 12px;
   font-weight: normal;
+}
+
+.num{
+  border : solid 1px #333 ;
+  padding: 0.1em;
+  border-radius: 10px;
+}
+
+input::placeholder {
+  color: #bbb;
 }
