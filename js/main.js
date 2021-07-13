@@ -1,30 +1,25 @@
 (function(){
   'use strict';
+
   var app = new Vue({
     el: '#app',
-    data: {
-        defaultDate: '2021-07-08',
-        DatePickerFormat: 'yyyy-MM-dd',
-        language:{
-          language: 'Japanese', 
-          months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'], 
-          monthsAbbr: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'], 
-          days: ['日', '月', '火', '水', '木', '金', '土'], 
-          rtl: false, 
-          ymd: 'yyyy-MM-dd', 
-          yearSuffix: '年'
-        },
-      
+    data: {    
       newItem: '', 
       todos: [
         // {title: 'task1',time: nowTime,isDone: false},
         // {title: 'task2',time: nowTime,isDone: false},
         // {title: 'task3',time: nowTime,isDone: true}
       ],
-      nowTime: '00:00'
+      nowTime: '00:00',
+      arrival_date: null,
+      min_date: null,
+      uniqueKey: 0
     },
-    components: {
-      'vuejs-datepicker':vuejsDatepicker
+    created: function(){
+      var dt = new Date();
+      dt.setDate(dt.getDate()+1);
+      this.arrival_date = this.formatDate(dt);
+      this.min_date = this.arrival_date;
     },
     watch: {
       todos: {
@@ -39,21 +34,30 @@
       this.todos = JSON.parse(localStorage.getItem('todos'))||[]
     },
     methods: {
-      customformat: function(value){
-        return moment(value).format('YYYY-MM-DD');
+      formatDate: function(){
+        var dt = new Date();
+        var y = dt.getFullYear();
+        var m = ('00'+(dt.getMonth()+1)).slice(-2);
+        var d = ('00' + dt.getDate()).slice(-2);
+        var result = y +'-'+ m +'-' + d;
+        return result;
       },
       addItem: function(){
         var date = new Date();
         let month = (date.getMonth() + 1).toString().padStart(2, 0);
         this.nowTime = date.getFullYear()+ '年'+ month + '月' +　date.getDate().toString().padStart(2, 0)+ '日'                         
                         + date.getHours().toString().padStart(2, 0) + ':'+ date.getMinutes().toString().padStart(2, 0);
-        var newStatus = this.status                
+        // var newStatus = this.status
+        let keyId = ++this.uniqueKey;
         var item = {
           title: this.newItem,
           time: this.nowTime,
           isDone1: false,
           isDone2: false,
-          isShow: true
+          isShow: true,
+          arrival_date: null,
+          min_date: this.arrival_date,
+          id: keyId
         }
         this.todos.push(item);
         this.newItem = '';
@@ -81,12 +85,25 @@
           this.todos.reverse();
       },
       go: function(){
-          var item = this.todos.filter(function(todo){
-          if(todo.isDone1 === false){//チェックがついていなければ
-            todo.isDone1 = !todo.isDone1;//falseを返す
-            todo.isShow = !todo.isShow;
+        this.todos = JSON.parse(localStorage.getItem('todos'))||[]
+        for (let i=0 ; i<this.todos.length ; i++){
+          if(this.todos[i].isDone2 === false){ 
+            this.todos[i].isDone2 == true;
           }
-        });
+          return this.todos;
+        }
+        // var elm = document.querySelectorAll('isDone1');
+        // elm.textContent = 'true';
+    
+        // if(todo.isDone1 === false){
+        //   todo.isShow = !todo.isShow;
+        // }
+        // return;
+        // var item = this.todos.filter(function(todo){
+          // if(todo.isDone1 === false){//チェックがついていなければ
+          //   todo.isDone1 = !todo.isDone1;//falseを返す
+          //   todo.isShow = !todo.isShow;
+          // }      
       },
       fin: function(){
         var item = this.todos.filter(function(todo){
@@ -95,9 +112,33 @@
           todo.isShow = !todo.isShow;//
         }
         });
+      },
+      all: function(){
+        let item = this.todos.forEach(function(todo){
+          if(todos.length != null){
+            return item; 
+          }
+        });
+      },
+      editItem: function(id){
+        var newText = window.prompt('以下内容で更新します。');
+        if(newText === ''){
+          alert('空欄です。入力してください');
+        }else if(newText !== null) {
+          this.edit(id, newText);
+        }
+      },
+      edit: function(id, text){
+        var editIndex='';
+        this.todos.some(function (value, index) {
+          if (value.id === id) {
+              editIndex = index;
+          }
+        });
+      this.todos[editIndex].title = text;
       }
     },
-    computed: {
+    computed: {//remainingを利用して、進行中todoを作る
       remaining: function(){
         var items = this.todos.filter(function(todo){
           if (todo.isDone2 === false){

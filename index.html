@@ -17,21 +17,8 @@
       <button v-on:click="sorts">並び替え</button>
       <button v-on:click="go">進行中タスク</button>
       <button v-on:click="fin">終了タスク</button>
-      <!-- <button v-on:click="clear">clear</button> -->
+      <button v-on:click="all">全表示</button>
     </h1>
-    <span>
-      <vuejs-datepicker 
-      v-model="defaultDate"
-      :format="DatePickerFormat"
-      :language="language"
-      :inline="true" 
-      name="datepicker"
-      id="input-id"
-      input-class="input-class"           
-      ></vuejs-datepicker>
-      <p>期限：{{customformat(defaultDate)}}</p>
-    </span>
-    
       <ul v-if="todos.length">
         <li v-for="(todo,index) in todos" :key="todo.id" v-show="todo.isShow">            
           <span class="num">NO.{{index + 1}}</span>
@@ -41,7 +28,10 @@
           <input type="checkbox" v-model="todo.isDone1">進行中 /
           <input type="checkbox" v-model="todo.isDone2">終了
           <span class="info">{{ todo.time }}</span>
+          <input type="date"　v-model="todo.arrival_date" v-bind:min="todo.min_date">
+            <p>終了予定日：{{todo.arrival_date}}</p>
           <span @click="deleteItem(index)" class="command">[x]</span>
+          <span @click="editItem(todo.id)" class="command">編集</span>
         </li>
       </ul>
       <ul v-else>
