@@ -84,7 +84,6 @@
       sorts: function(){
           this.todos.reverse();
       },
-      // go: function(){
       //   this.todos = JSON.parse(localStorage.getItem('todos'))||[]
       //   for (let i=0 ; i<this.todos.length ; i++){
       //     if(this.todos[i].isDone2 === false){ 
@@ -155,26 +154,31 @@
         return items.length;
       },
       go: function(){
-        // var items = this.todos.filter(function(todo){
-        //   if (todo.isDone1===true){
-        //     return todo.isShow = true;//falseを返す
-        //   }else{
-        //     return todo.isShow = false;
-        //   }
-        // });
-        // return this.items;
         var newList=[];//絞り込み後のタスクを格納する新しい配列
         for(let i=0 ; i<this.todos.length ; i++){
           var isDone1 = false;//表示対象か判定するフラグ、以下表示しない場合を判定
-          if(!this.todos[i].isDone1){ 
+          if((!this.todos[i].isDone1)&&(this.todos[i].isShow)){ 
             this.todos[i].isShow = false;//このタスクは、表示しない
           }
-          if(isDone1 = true){
+          if(isDone1){//対象のタスクだけ配列に追加
             newList.push(this.todos[i]);
           }
         }
         return newList;
         }
-      }
+      },
+      fin: function(){
+        var newList=[];//絞り込み後のタスクを格納する新しい配列
+        for(let i=0 ; i<this.todos.length ; i++){
+          var isDone2 = false;//表示対象か判定するフラグ、以下表示しない場合を判定
+          if((!this.todos[i].isDone2)&&(this.todos[i].isShow)){ 
+            this.todos[i].isShow = false;//このタスクは、表示しない
+          }
+          if(isDone1){//対象のタスクだけ配列に追加
+            newList.push(this.todos[i]);
+          }
+        }
+        return newList;
+        } 
   });
 })();
