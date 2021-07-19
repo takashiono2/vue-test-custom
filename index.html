@@ -15,9 +15,8 @@
       <button v-on:click="purge">終了のみ削除</button>
       <button v-on:click="clear">全削除</button>
       <button v-on:click="sorts">並び替え</button>
-      <button v-on:click="go()">進行中タスク</button>
+      <button v-on:click="go">進行中タスク</button>
       <button v-on:click="fin()">終了タスク</button>
-      <button v-on:click="all">全表示</button>
     </h1>
       <ul v-if="todos.length">
         <li v-for="(todo,index) in todos" :key="todo.id" v-show="todo.isShow">            
