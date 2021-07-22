@@ -84,8 +84,36 @@
         this.todos.splice(0);
       },
       sorts: function(){
-          this.todos.reverse();
+        this.todos.reverse();
       },
+      limit: function(){
+        this.todos.sort(function(a, b){
+          return parseInt(b.arrival_date.replace(/-/g,"")) - parseInt(a.arrival_date.replace(/-/g,""));
+        });
+      },
+      // sortkana: function(){
+      //   this.todos.sort(function(a, b){
+      //       a = katakanaToHiragana(a.title.toString());
+      //       b = katakanaToHiragana(b.title.toString());
+      //       if(a < b){
+      //           return -1;
+      //       }else if(a> b){
+      //           return 1;
+      //       }
+      //       return 0;
+      // });
+// https://gist.github.com/kawanet/5553478
+/* カタカナをひらがなに変換する関数
+ * @param {String} src - カタカナ
+ * @returns {String} - ひらがな
+ */
+      //   function katakanaToHiragana(src) {
+      //       return src.replace(/[\u30a1-\u30f6]/g, function(match) {
+      //           var chr = match.charCodeAt(0) - 0x60;
+      //           return String.fromCharCode(chr);
+      //       });
+      //   }
+      // },
       editItem: function(id){
         var newText = window.prompt('以下内容で更新します。');
         if(newText === ''){
@@ -104,16 +132,32 @@
       this.todos[editIndex].title = text;
       },
       go: function(){//オブジェクトはthis.todosに入っている。キャッシュしないのでフィルターしない。        
-        for(let i=0 ; i<this.todos.length; i++){
-          if((this.todos[i].isDone1 === false)&&(this.todos[i].isShow === false)){
-            this.todos[i].isShow = true;
+        for(let j=0 ; j<this.todos.length; j++){
+          if((this.todos[j].isDone1 === false)&&(this.todos[j].isShow === false)){
+            this.todos[j].isShow = true;
             continue;
           }
-          if(this.todos[i].isDone1 === true){//チェックありなら
-            this.todos[i].isShow = true;//表示
+          if(this.todos[j].isDone1 === true){//チェックありなら
+            this.todos[j].isShow = true;//表示
           }
-          if(this.todos[i].isDone1 === false){//チェックなしなら、非表示
-            this.todos[i].isShow = false;
+          if(this.todos[j].isDone1 === false){//チェックなしなら、非表示
+            this.todos[j].isShow = false;
+          }
+          continue;
+          }
+        // this.todo[i].isShow = !this.todo[i].isShow; 
+      },
+      fin: function(){//オブジェクトはthis.todosに入っている。キャッシュしないのでフィルターしない。        
+        for(let j=0 ; j<this.todos.length; j++){
+          if((this.todos[j].isDone2 === false)&&(this.todos[j].isShow === false)){
+            this.todos[j].isShow = true;
+            continue;
+          }
+          if(this.todos[j].isDone2 === true){//チェックありなら
+            this.todos[j].isShow = true;//表示
+          }
+          if(this.todos[j].isDone2 === false){//チェックなしなら、非表示
+            this.todos[j].isShow = false;
           }
           continue;
           }
@@ -132,33 +176,19 @@
         return items.length;
       },
       function(){//オブジェクトはthis.todosに入っている
-          for(let i=0 ; i<this.todos.length; i++){
-            if((this.todos[i].isDone1 === true)&&(this.todos[i].isShow === true)){//チェックあり、表示
-              var items = this.todos.filter(function(todo){
-                  return todo.isDone1 === true;
-              });
-              this.todos = items;
-            // }else if(this.todos.length !== this.items.length){
-            //   console.log(this.items.length);
-            }else{
-              continue;
-            }
+        for(let j=0 ; j<this.todos.length; j++){
+          if((this.todos[j].isDone1 === true)&&(this.todos[j].isShow === true)){//チェックあり、表示
+            var items = this.todos.filter(function(todo){
+                return todo.isDone1 === true;
+            });
+            this.todos = items;
+          // }else if(this.todos.length !== this.items.length){
+          //   console.log(this.items.length);
+          }else{
+            continue;
           }
         }
-      // },
-      // fin: function(){
-      //   var newList=[];//絞り込み後のタスクを格納する新しい配列
-      //   for(let i=0 ; i<this.todos.length ; i++){
-      //     var isDone2 = false;//表示対象か判定するフラグ、以下表示しない場合を判定
-      //     if((!this.todos[i].isDone2)&&(this.todos[i].isShow)){ 
-      //       this.todos[i].isShow = false;//このタスクは、表示しない
-      //     }
-      //     if(isDone1){//対象のタスクだけ配列に追加
-      //       newList.push(this.todos[i]);
-      //     }
-      //   }
-      //   return newList;
-      // }
+     }
     }
   });
 })();
