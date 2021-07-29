@@ -18,6 +18,8 @@
       <button v-on:click="limit">並び替え期限</button>
       <button v-on:click="go">進行中タスク</button>
       <button v-on:click="fin">終了タスク</button>
+      <button v-on:click="all">全表示</button>
+      <!-- <button v-on:click="fin()">終了タスク</button> -->
     </h1>
       <ul v-if="todos.length">
         <li v-for="(todo,index) in todos" :key="todo.id" v-show="todo.isShow">            
