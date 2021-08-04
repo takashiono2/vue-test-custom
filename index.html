@@ -21,8 +21,9 @@
       <button v-on:click="all">全表示</button>
       <!-- <button v-on:click="fin()">終了タスク</button> -->
     </h1>
-      <ul v-if="todos.length">
-        <li v-for="(todo,index) in todos" :key="todo.id" v-show="todo.isShow">            
+      <ul v-if="todos.length"><!--配列があったら-->
+        <!--li v-for="(todo,index) in todos" :key="todo.id" v-show="todo.isShow"-->
+        <li v-for="(todo,index) in doneTodos" :key="todo.id" v-show="todo.isShow">
           <span class="num">NO.{{index + 1}}</span>
           <span v-bind:class="{done: todo.isDone2}">
           「{{ todo.title }}」

@@ -15,7 +15,9 @@
       min_date: null,
       // isShow: true,
       isDone1: false,
-      uniqueKey: 0
+      isDone2: false,
+      uniqueKey: 0,
+      btn:''
     },
     created: function(){
       var dt = new Date();
@@ -49,7 +51,6 @@
         let month = (date.getMonth() + 1).toString().padStart(2, 0);
         this.nowTime = date.getFullYear()+ '年'+ month + '月' +　date.getDate().toString().padStart(2, 0)+ '日'                         
                         + date.getHours().toString().padStart(2, 0) + ':'+ date.getMinutes().toString().padStart(2, 0);
-        // var newStatus = this.status
         let keyId = ++this.uniqueKey;
         var item = {
           title: this.newItem,
@@ -109,28 +110,37 @@
       this.todos[editIndex].title = text;
       },
       go: function(){//ボタンは変数(doneTodos)を切り替えるだけ。オブジェクトはthis.todosに入っている。キャッシュしないのでフィルターしない
-        this.todos.forEach((todo)=>{
-          if(this.doneTodos.length !== this.todos.length){//チェックがないなら
-            return todo.isShow = todo.isDone1;
-          }else{
-            return todo.isShow = !todo.isShow;
-          }
-        });
+         this.btn="goBtn";
       },
+      // go: function(){//ボタンは変数(doneTodos)を切り替えるだけ。オブジェクトはthis.todosに入っている。キャッシュしないのでフィルターしない
+      //   this.todos.forEach((todo)=>{//todosそのものを切り替える,todosの中身が変わらないように
+      //     if(this.doneTodos.length !== this.todos.length){//チェックがないなら
+      //       return todo.isShow = todo.isDone1;
+      //     }else{
+      //       return todo.isShow = !todo.isShow;
+      //     }
+      //   });
+      // },
       fin: function(){//ボタンは変数(doneTodos)を切り替えるだけ。オブジェクトはthis.todosに入っている。キャッシュしないのでフィルターしない
-        this.todos.forEach((todo)=>{
-          if(this.doneTodos.length !== this.todos.length){//チェックがないなら
-            return todo.isShow = todo.isDone2;
-          }else{
-            return todo.isShow = !todo.isShow;
-          }
-        });
+        this.btn="finBtn"
       },
+      // fin: function(){//ボタンは変数(doneTodos)を切り替えるだけ。オブジェクトはthis.todosに入っている。キャッシュしないのでフィルターしない
+      //   this.todos.forEach((todo)=>{
+      //     if(this.doneTodos.length !== this.todos.length){//チェックがないなら
+      //       return todo.isShow = todo.isDone2;
+      //     }else{
+      //       return todo.isShow = !todo.isShow;
+      //     }
+      //   });
+      // },
       all: function(){
-        this.todos.forEach((todo)=>{
-          return todo.isShow = true;
-        });
+        this.btn="allBtn"
       }
+      // all: function(){
+      //   this.todos.forEach((todo)=>{
+      //     return todo.isShow = true;
+      //   });
+      // }
     },
     computed: {//remainingを利用して、進行中todoを作る
       remaining: function(){
@@ -144,11 +154,27 @@
         return items.length;
       },
       doneTodos(){
-        return this.todos.filter(todo=>todo.isDone1);//チェックありを返す
-      },
-      doneTodos2(){
-        return this.todos.filter(todo=>todo.isDone2);
-      }
+        switch(this.btn){
+          case 'goBtn':
+            return this.todos.filter(todo=>todo.isDone1);
+            break;
+          case 'finBtn':
+            return this.todos.filter(todo=>todo.isDone2);
+            break;
+          case 'allBtn':
+            return this.todos;
+            break;
+          default:
+            return [];
+          }
+        // return this.todos.filter(todo=>todo.isDone1);//チェックありを返す
+      },     
+      // doneTodos(){
+      //   return this.todos.filter(todo=>todo.isDone1);//チェックありを返す
+      // },
+      // doneTodos2(){
+      //   return this.todos.filter(todo=>todo.isDone2);
+      // }
       // function(){//オブジェクトはthis.todosに入っている
       //   for(let j=0 ; j<this.todos.length; j++){
       //     if((this.todos[j].isDone1 === true)&&(this.todos[j].isShow === true)){//チェックあり、表示
