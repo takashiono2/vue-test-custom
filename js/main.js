@@ -154,6 +154,7 @@
         return items.length;
       },
       doneTodos(){
+        this.todos;
         switch(this.btn){
           case 'goBtn':
             return this.todos.filter(todo=>todo.isDone1);
@@ -165,9 +166,9 @@
             return this.todos;
             break;
           default:
-            return [];
+            return this.todos;
+          //   return [];
           }
-        // return this.todos.filter(todo=>todo.isDone1);//チェックありを返す
       },     
       // doneTodos(){
       //   return this.todos.filter(todo=>todo.isDone1);//チェックありを返す
